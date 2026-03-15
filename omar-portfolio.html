@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omar Abdelaziz — Frontend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--surface:#111111;--surface2:#1a1a1a;--border:#222222;--accent:#c8ff00;--accent2:#ff6b35;--text:#f0f0f0;--muted:#666666;--subtle:#333333;--sidebar-w:240px;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;font-size:14px;line-height:1.6;overflow-x:hidden;cursor:default;}
+a{text-decoration:none;color:inherit;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:100;opacity:0.35;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:24px 48px;border-bottom:1px solid transparent;transition:border-color 0.3s,background 0.3s;}
+nav.scrolled{background:rgba(10,10,10,0.92);border-color:var(--border);backdrop-filter:blur(12px);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--text);}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{color:var(--muted);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover{color:var(--accent);}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding:0 48px;padding-top:100px;position:relative;overflow:hidden;}
+.hero-bg-line{position:absolute;top:0;right:40%;width:1px;height:100%;background:linear-gradient(to bottom,transparent,var(--border),transparent);}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding-right:80px;padding-bottom:80px;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(200,255,0,0.08);border:1px solid rgba(200,255,0,0.2);color:var(--accent);padding:6px 14px;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:32px;width:fit-content;}
+.hero-tag::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.hero-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(48px,6vw,80px);line-height:0.95;letter-spacing:-3px;margin-bottom:24px;}
+.hero-name .line2{color:transparent;-webkit-text-stroke:1px var(--muted);}
+.hero-desc{font-family:'Fraunces',serif;font-weight:300;font-size:18px;color:var(--muted);max-width:420px;line-height:1.7;margin-bottom:48px;font-style:italic;}
+.hero-cta{display:flex;gap:16px;align-items:center;}
+.btn-primary{background:var(--accent);color:#000;padding:14px 32px;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.05em;text-transform:uppercase;transition:all 0.2s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%);}
+.btn-primary:hover{background:#d4ff1a;transform:translateY(-2px);}
+.btn-ghost{color:var(--muted);padding:14px 32px;font-family:'DM Mono',monospace;font-size:12px;border:1px solid var(--border);transition:all 0.2s;}
+.btn-ghost:hover{color:var(--text);border-color:var(--subtle);}
+.hero-right{display:flex;align-items:center;justify-content:center;position:relative;padding-bottom:80px;}
+.hero-card{background:var(--surface);border:1px solid var(--border);padding:40px;width:360px;position:relative;}
+.hero-card::before{content:'';position:absolute;top:-1px;left:40px;right:40px;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);}
+.card-avatar{width:64px;height:64px;background:linear-gradient(135deg,var(--accent),var(--accent2));margin-bottom:20px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:#000;clip-path:polygon(20% 0%,80% 0%,100% 20%,100% 80%,80% 100%,20% 100%,0% 80%,0% 20%);}
+.card-name{font-family:'Syne',sans-serif;font-weight:700;font-size:20px;margin-bottom:4px;}
+.card-role{color:var(--accent);font-size:12px;letter-spacing:0.1em;margin-bottom:24px;}
+.card-info{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.card-info-item{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;}
+.ic{width:28px;height:28px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;border:1px solid var(--border);}
+.card-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:24px;border-top:1px solid var(--border);}
+.stat{text-align:center;}
+.stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:28px;color:var(--accent);line-height:1;}
+.stat-label{color:var(--muted);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;}
+.float-el{position:absolute;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.05em;animation:float 6s ease-in-out infinite;}
+.float-el:nth-child(1){top:20%;left:10%;animation-delay:0s;}
+.float-el:nth-child(2){top:70%;left:5%;animation-delay:2s;}
+.float-el:nth-child(3){top:40%;right:5%;animation-delay:4s;}
+@keyframes float{0%,100%{transform:translateY(0);opacity:0.4;}50%{transform:translateY(-10px);opacity:0.8;}}
+
+/* MARQUEE */
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface);padding:14px 0;}
+.marquee{display:flex;gap:60px;white-space:nowrap;animation:marquee 20s linear infinite;width:max-content;}
+.marquee-item{font-family:'Syne',sans-serif;font-weight:600;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:20px;}
+.marquee-item::after{content:'◆';color:var(--accent);font-size:8px;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SECTIONS */
+section{padding:100px 48px;}
+.section-label{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.section-label::before{content:'//';color:var(--muted);}
+.section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(32px,4vw,52px);line-height:1;letter-spacing:-2px;margin-bottom:64px;}
+
+/* SKILLS */
+#skills{background:var(--surface);border-top:1px solid var(--border);}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+.skill-card{background:var(--surface2);padding:32px;transition:background 0.2s;position:relative;overflow:hidden;}
+.skill-card:hover{background:#1e1e1e;}
+.skill-icon{font-size:28px;margin-bottom:16px;}
+.skill-name{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:8px;}
+.skill-meta{color:var(--muted);font-size:11px;margin-bottom:20px;}
+.skill-bar{height:2px;background:var(--border);position:relative;}
+.skill-bar-fill{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;transition:width 1.2s cubic-bezier(0.16,1,0.3,1);}
+.skill-pct{position:absolute;right:0;top:-20px;font-size:10px;color:var(--muted);}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:2px;background:var(--border);border:1px solid var(--border);}
+.project-card{background:var(--surface);padding:36px;position:relative;overflow:hidden;transition:background 0.25s;}
+.project-card:nth-child(1){grid-column:span 7;}
+.project-card:nth-child(2){grid-column:span 5;}
+.project-card:nth-child(3){grid-column:span 5;}
+.project-card:nth-child(4){grid-column:span 7;}
+.project-card:hover{background:var(--surface2);}
+.project-num{font-family:'Syne',sans-serif;font-weight:800;font-size:11px;color:var(--accent);letter-spacing:0.2em;margin-bottom:20px;}
+.project-title{font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(18px,2vw,26px);line-height:1.1;margin-bottom:12px;letter-spacing:-0.5px;}
+.project-desc{color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:24px;}
+.project-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+.tag{background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:4px 10px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}
+.project-link{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-size:12px;letter-spacing:0.05em;transition:gap 0.2s;}
+.project-link:hover{gap:14px;}
+.project-link.muted{color:var(--muted2,#888);}
+.project-card::after{content:'';position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 32px 32px 0;border-color:transparent var(--accent) transparent transparent;opacity:0;transition:opacity 0.2s;}
+.project-card:hover::after{opacity:1;}
+
+/* FREELANCE */
+.task-container{display:grid;grid-template-columns:1fr 360px;gap:2px;background:var(--border);border:1px solid var(--border);}
+.task-main{background:var(--bg);padding:48px;}
+.task-sidebar{background:var(--surface2);padding:36px;display:flex;flex-direction:column;gap:28px;}
+.task-badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;}
+.badge{padding:5px 12px;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;border:1px solid;}
+.badge-green{color:#4ade80;border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.08);}
+.badge-orange{color:var(--accent2);border-color:rgba(255,107,53,0.3);background:rgba(255,107,53,0.08);}
+.badge-blue{color:#60a5fa;border-color:rgba(96,165,250,0.3);background:rgba(96,165,250,0.08);}
+.task-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(24px,3vw,36px);line-height:1.05;letter-spacing:-1.5px;margin-bottom:20px;}
+.task-short{color:var(--muted);font-size:15px;line-height:1.7;margin-bottom:36px;font-family:'Fraunces',serif;font-style:italic;font-weight:300;}
+.task-divider{height:1px;background:var(--border);margin:32px 0;}
+.deliverable-item{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px;}
+.deliverable-num{width:28px;height:28px;background:rgba(200,255,0,0.1);border:1px solid rgba(200,255,0,0.2);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;}
+.deliverable-title{font-family:'Syne',sans-serif;font-weight:600;font-size:14px;margin-bottom:4px;}
+.deliverable-desc{color:var(--muted);font-size:12px;line-height:1.6;}
+.tech-stack{display:flex;flex-wrap:wrap;gap:8px;}
+.tech-pill{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:6px 12px;font-size:11px;letter-spacing:0.05em;}
+.sidebar-block{}
+.sidebar-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.price-display{display:flex;align-items:baseline;gap:6px;margin-bottom:4px;}
+.price-main{font-family:'Syne',sans-serif;font-weight:800;font-size:38px;color:var(--accent);letter-spacing:-2px;line-height:1;}
+.price-currency{font-size:18px;color:var(--muted);}
+.price-note{color:var(--muted);font-size:11px;}
+.timeline-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.timeline-item:last-child{border-bottom:none;}
+.timeline-item .label{color:var(--muted);}
+.timeline-item .value{color:var(--text);font-weight:500;}
+.timeline-item .value.accent{color:var(--accent);}
+.cta-block{background:var(--accent);padding:20px;text-align:center;}
+.cta-block a{font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#000;letter-spacing:0.05em;text-transform:uppercase;}
+.guarantee{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px;text-align:center;justify-content:center;margin-top:12px;}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.big-text{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(36px,5vw,72px);line-height:0.95;letter-spacing:-3px;margin-bottom:32px;}
+.big-text em{color:var(--accent);font-style:normal;}
+.contact-item{display:flex;align-items:center;gap:16px;padding:20px 0;border-bottom:1px solid var(--border);color:var(--text);transition:padding-left 0.2s;}
+.contact-item:hover{padding-left:8px;}
+.ci-label{color:var(--muted);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;}
+.ci-val{font-family:'Syne',sans-serif;font-weight:600;font-size:16px;margin-top:2px;}
+.ci-arrow{margin-left:auto;color:var(--accent);}
+
+/* FOOTER */
+footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.footer-copy{color:var(--muted);font-size:11px;}
+.footer-right{color:var(--muted);font-size:11px;}
+.footer-right span{color:var(--accent);}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:20px 24px;}
+  .nav-links{display:none;}
+  .hero{grid-template-columns:1fr;padding:24px;padding-top:100px;}
+  .hero-left{padding-right:0;}
+  .hero-right{display:none;}
+  section{padding:64px 24px;}
+  .projects-grid{grid-template-columns:1fr;}
+  .project-card{grid-column:span 1!important;}
+  .task-container{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;gap:40px;}
+  footer{flex-direction:column;gap:12px;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#home" class="nav-logo">OA<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#freelance">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="float-el">React.createElement()</div>
+  <div class="float-el">{ margin: 0 auto }</div>
+  <div class="float-el">const [ui, setUi]</div>
+  <div class="hero-bg-line"></div>
+  <div class="hero-left reveal">
+    <div class="hero-tag">Available for Freelance</div>
+    <h1 class="hero-name">Omar<br><span class="line2">Abdelaziz</span></h1>
+    <p class="hero-desc">Frontend developer crafting fast, elegant, and purposeful digital experiences. Based in Cairo, building for the world.</p>
+    <div class="hero-cta">
+      <a href="#freelance" class="btn-primary">Hire Me</a>
+      <a href="#projects" class="btn-ghost">View Work &rarr;</a>
+    </div>
+  </div>
+  <div class="hero-right reveal">
+    <div class="hero-card">
+      <div class="card-avatar">OA</div>
+      <div class="card-name">Omar Abdelaziz</div>
+      <div class="card-role">FRONTEND DEVELOPER</div>
+      <div class="card-info">
+        <div class="card-info-item"><div class="ic">&#128205;</div>Faculty of Engineering, Cairo University</div>
+        <div class="card-info-item"><div class="ic">&#128231;</div>omar.abdos2005&#64;gmail.com</div>
+        <div class="card-info-item"><div class="ic">&#128241;</div>+20 111 029 4688</div>
+        <div class="card-info-item"><div class="ic">&#127891;</div>Computer Engineering Dept.</div>
+      </div>
+      <div class="card-stats">
+        <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Years Exp.</div></div>
+        <div class="stat"><div class="stat-num">20+</div><div class="stat-label">Projects</div></div>
+        <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Satisfaction</div></div>
+        <div class="stat"><div class="stat-num">&#8734;</div><div class="stat-label">Coffee</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span class="marquee-item">React.js</span><span class="marquee-item">Next.js</span><span class="marquee-item">TypeScript</span><span class="marquee-item">Tailwind CSS</span><span class="marquee-item">JavaScript</span><span class="marquee-item">CSS3 Animations</span><span class="marquee-item">REST APIs</span><span class="marquee-item">Git</span><span class="marquee-item">Responsive Design</span><span class="marquee-item">Performance Optimization</span><span class="marquee-item">React.js</span><span class="marquee-item">Next.js</span><span class="marquee-item">TypeScript</span><span class="marquee-item">Tailwind CSS</span><span class="marquee-item">JavaScript</span><span class="marquee-item">CSS3 Animations</span><span class="marquee-item">REST APIs</span><span class="marquee-item">Git</span><span class="marquee-item">Responsive Design</span><span class="marquee-item">Performance Optimization</span>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label reveal">Expertise</div>
+  <div class="section-title reveal">Core Skills</div>
+  <div class="skills-grid reveal">
+    <div class="skill-card"><div class="skill-icon">&#9883;&#65039;</div><div class="skill-name">React / Next.js</div><div class="skill-meta">Components, Hooks, SSR, SSG</div><div class="skill-bar"><div class="skill-bar-fill" data-w="90"></div><span class="skill-pct">90%</span></div></div>
+    <div class="skill-card"><div class="skill-icon">&#129003;</div><div class="skill-name">JavaScript / TypeScript</div><div class="skill-meta">ES6+, Async/Await, Type Safety</div><div class="skill-bar"><div class="skill-bar-fill" data-w="88"></div><span class="skill-pct">88%</span></div></div>
+    <div class="skill-card"><div class="skill-icon">&#127912;</div><div class="skill-name">CSS3 / Tailwind</div><div class="skill-meta">Animations, Flexbox, Grid, Variables</div><div class="skill-bar"><div class="skill-bar-fill" data-w="92"></div><span class="skill-pct">92%</span></div></div>
+    <div class="skill-card"><div class="skill-icon">&#128279;</div><div class="skill-name">REST APIs / Fetch</div><div class="skill-meta">Integration, Auth, State Management</div><div class="skill-bar"><div class="skill-bar-fill" data-w="82"></div><span class="skill-pct">82%</span></div></div>
+    <div class="skill-card"><div class="skill-icon">&#128241;</div><div class="skill-name">Responsive Design</div><div class="skill-meta">Mobile-first, Cross-browser, A11y</div><div class="skill-bar"><div class="skill-bar-fill" data-w="95"></div><span class="skill-pct">95%</span></div></div>
+    <div class="skill-card"><div class="skill-icon">&#128736;&#65039;</div><div class="skill-name">Dev Tools / Git</div><div class="skill-meta">GitHub, CI/CD basics, Vite, Webpack</div><div class="skill-bar"><div class="skill-bar-fill" data-w="80"></div><span class="skill-pct">80%</span></div></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label reveal">Portfolio</div>
+  <div class="section-title reveal">Selected Work</div>
+  <div class="projects-grid reveal">
+
+    <div class="project-card">
+      <div class="project-num">01 &mdash; Featured &middot; Live</div>
+      <div class="project-title">Yasta Focus &mdash;<br>Gamified Study Platform</div>
+      <div class="project-desc">A full-stack productivity platform for students combining Pomodoro timers, real-time study rooms, AI chat (Gemini), leaderboards, XP/levels, achievements, and live video sessions. Built with a full backend, WebSocket layer, and PostgreSQL database. Deployed and live.</div>
+      <div class="project-tags"><span class="tag">React 19</span><span class="tag">Vite</span><span class="tag">TailwindCSS</span><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">PostgreSQL</span><span class="tag">Socket.io</span><span class="tag">Gemini AI</span></div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="https://yasta-focus.netlify.app/" target="_blank" rel="noopener" class="project-link">Live Demo &rarr;</a>
+        <a href="https://github.com/georgeibrahim1/yasta-focus" target="_blank" rel="noopener" class="project-link" style="color:#888;">GitHub &rarr;</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">02 &mdash; DEPI Programme &middot; Live</div>
+      <div class="project-title">Electro &mdash;<br>E-Commerce Website</div>
+      <div class="project-desc">Multi-page electronics storefront built for the Digital Egypt Pioneers Initiative. Features product category pages (laptops, phones, cameras, accessories), shopping cart, user auth forms, Slick carousels, image zoom, and a price range slider.</div>
+      <div class="project-tags"><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">Bootstrap 3</span><span class="tag">jQuery</span></div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="https://tomasnageh.github.io/E-Commerce-DEPI/" target="_blank" rel="noopener" class="project-link">Live Demo &rarr;</a>
+        <a href="https://github.com/TomasNageh/E-Commerce-DEPI" target="_blank" rel="noopener" class="project-link" style="color:#888;">GitHub &rarr;</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">03 &mdash; Systems Engineering</div>
+      <div class="project-title">Physiotherapy Center<br>Scheduler &mdash; C++</div>
+      <div class="project-desc">A simulation system for managing physiotherapy center operations. Implements custom data structures from scratch &mdash; priority queues, stacks, and scheduling algorithms &mdash; to model patient intake, treatment assignment, and resource allocation across appointment slots.</div>
+      <div class="project-tags"><span class="tag">C++</span><span class="tag">OOP</span><span class="tag">Data Structures</span><span class="tag">Scheduling Algorithms</span><span class="tag">Priority Queue</span></div>
+      <a href="https://github.com/Enginmann/Physiotherapy-Center" target="_blank" rel="noopener" class="project-link">View on GitHub &rarr;</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">04 &mdash; Computer Architecture</div>
+      <div class="project-title">Von Neumann<br>Architecture Simulator</div>
+      <div class="project-desc">A hardware-level simulator of the Von Neumann architecture implemented in VHDL, with an assembler written in Python and test programs in Assembly. Simulates the full fetch-decode-execute cycle, memory, ALU, and control unit &mdash; a deep-dive into how CPUs actually work.</div>
+      <div class="project-tags"><span class="tag">VHDL</span><span class="tag">Assembly</span><span class="tag">Python</span><span class="tag">Computer Architecture</span><span class="tag">CPU Design</span></div>
+      <a href="https://github.com/Emadadham270/von-neumann-architecture" target="_blank" rel="noopener" class="project-link">View on GitHub &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FREELANCE INDEX -->
+<section id="freelance" style="background:var(--surface);border-top:1px solid var(--border);padding:64px 48px 40px;">
+  <div class="section-label reveal">Freelance Services</div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;" class="reveal">
+    <div class="section-title" style="margin-bottom:0;">4 Ways I Can<br>Help You Ship</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="#freelance-1" style="color:var(--muted);font-size:12px;border:1px solid var(--border);padding:8px 16px;transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">01 &mdash; Full SaaS App</a>
+      <a href="#freelance-2" style="color:var(--muted);font-size:12px;border:1px solid var(--border);padding:8px 16px;transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">02 &mdash; Landing Page</a>
+      <a href="#freelance-3" style="color:var(--muted);font-size:12px;border:1px solid var(--border);padding:8px 16px;transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">03 &mdash; Fix &amp; Refactor</a>
+      <a href="#freelance-4" style="color:var(--muted);font-size:12px;border:1px solid var(--border);padding:8px 16px;transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">04 &mdash; Dashboard</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE 1 -->
+<section id="freelance-1" style="background:var(--surface);border-top:1px solid var(--border);padding:80px 48px;">
+  <div class="section-label reveal" style="margin-bottom:32px;">Service 01</div>
+  <div class="task-container reveal">
+    <div class="task-main">
+      <div class="task-badge-row"><span class="badge badge-green">Frontend Development</span><span class="badge badge-orange">High Complexity</span><span class="badge badge-blue">React + Next.js</span></div>
+      <h2 class="task-title">Complete SaaS Web App<br>Frontend &mdash; From Design<br>to Deployed Product</h2>
+      <p class="task-short">I'll build your entire web application frontend from Figma designs or reference sites &mdash; pixel-perfect, production-ready, optimized for performance, and wired up to your backend API.</p>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.05em;margin-bottom:20px;">WHAT I DELIVER</div>
+      <div class="deliverable-item"><div class="deliverable-num">1</div><div><div class="deliverable-title">Fully Responsive UI Implementation</div><div class="deliverable-desc">Pixel-perfect across all screen sizes. Cross-browser tested on Chrome, Firefox, Safari, and Edge.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">2</div><div><div class="deliverable-title">Component Library &amp; Design System</div><div class="deliverable-desc">Reusable, documented React components with consistent theming.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">3</div><div><div class="deliverable-title">REST API Integration</div><div class="deliverable-desc">Full wiring of all frontend views to your backend APIs including auth flows (JWT/OAuth), loading states, and error handling.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">4</div><div><div class="deliverable-title">Performance &amp; SEO Optimization</div><div class="deliverable-desc">Lighthouse score &ge; 90 guaranteed. Code splitting, lazy loading, image optimization, and semantic HTML.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">5</div><div><div class="deliverable-title">Clean, Documented Codebase</div><div class="deliverable-desc">TypeScript, structured file architecture, inline comments, and a README. Ready for your team to scale.</div></div></div>
+      <div class="task-divider"></div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.05em;margin-bottom:16px;">TECH STACK</div>
+      <div class="tech-stack"><span class="tech-pill">React 18</span><span class="tech-pill">Next.js 14</span><span class="tech-pill">TypeScript</span><span class="tech-pill">Tailwind CSS</span><span class="tech-pill">React Query</span><span class="tech-pill">Zustand / Redux</span><span class="tech-pill">Framer Motion</span><span class="tech-pill">Axios</span><span class="tech-pill">React Hook Form</span><span class="tech-pill">Zod</span></div>
+      <div class="task-divider"></div>
+      <div style="color:var(--muted);font-size:12px;line-height:1.8;">
+        <span style="color:var(--accent);">&#10003;</span> Figma / Adobe XD / Screenshots accepted<br>
+        <span style="color:var(--accent);">&#10003;</span> Daily progress updates<br>
+        <span style="color:var(--accent);">&#10003;</span> 7-day post-delivery support included<br>
+        <span style="color:var(--accent);">&#10003;</span> 3 revision rounds included
+      </div>
+    </div>
+    <div class="task-sidebar">
+      <div class="sidebar-block"><div class="sidebar-label">Project Rate</div><div class="price-display"><span class="price-currency">$</span><span class="price-main">450</span></div><div class="price-note">Starting price &middot; Scales with scope</div></div>
+      <div class="sidebar-block"><div class="sidebar-label">Delivery Breakdown</div><div class="timeline-item"><span class="label">Basic UI (5 pages)</span><span class="value accent">7 days</span></div><div class="timeline-item"><span class="label">+ API Integration</span><span class="value">+3 days</span></div><div class="timeline-item"><span class="label">+ Auth System</span><span class="value">+2 days</span></div><div class="timeline-item"><span class="label">Complex App (10+ pages)</span><span class="value">21 days</span></div></div>
+      <div class="sidebar-block"><div class="sidebar-label">About the Developer</div><div style="color:var(--muted);font-size:12px;line-height:1.8;">Computer Engineering student at Cairo University specializing in frontend architecture. I treat every project as a product problem, not just a coding task.</div></div>
+      <div class="cta-block"><a href="mailto:omar.abdos2005@gmail.com?subject=SaaS%20Frontend%20Project%20Inquiry">Let's Start Your Project</a></div>
+      <div class="guarantee"><span>&#128737;&#65039;</span><span>Free revision until you're 100% satisfied</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE 2 -->
+<section id="freelance-2" style="background:var(--bg);border-top:1px solid var(--border);padding:80px 48px;">
+  <div class="section-label reveal" style="margin-bottom:32px;">Service 02</div>
+  <div class="task-container reveal">
+    <div class="task-main">
+      <div class="task-badge-row"><span class="badge badge-blue">UI/UX Implementation</span><span class="badge badge-green">Medium Complexity</span><span class="badge badge-orange">Tailwind + Animation</span></div>
+      <h2 class="task-title">Landing Page &amp;<br>Marketing Site &mdash;<br>Built to Convert</h2>
+      <p class="task-short">Your product deserves a front door that impresses. I'll craft a high-performance, animated marketing site that turns visitors into customers &mdash; optimized for speed, SEO, and every screen size.</p>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.05em;margin-bottom:20px;">WHAT I DELIVER</div>
+      <div class="deliverable-item"><div class="deliverable-num">1</div><div><div class="deliverable-title">Hero + Full Page Sections</div><div class="deliverable-desc">Hero, features, testimonials, pricing, FAQ, CTA, and footer &mdash; all custom-designed and animated to match your brand.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">2</div><div><div class="deliverable-title">Smooth Scroll Animations</div><div class="deliverable-desc">Scroll-triggered reveals, parallax effects, counter animations, and hover micro-interactions that make the page feel alive.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">3</div><div><div class="deliverable-title">Lead Capture Integration</div><div class="deliverable-desc">Contact forms, newsletter signup, Calendly embed, or any CRM integration you need to capture leads directly.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">4</div><div><div class="deliverable-title">Lighthouse 95+ Score</div><div class="deliverable-desc">Optimized assets, critical CSS inlining, lazy loading, and proper meta tags. Your page will rank and load fast.</div></div></div>
+      <div class="task-divider"></div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.05em;margin-bottom:16px;">TECH STACK</div>
+      <div class="tech-stack"><span class="tech-pill">Next.js / Vite</span><span class="tech-pill">Tailwind CSS</span><span class="tech-pill">Framer Motion</span><span class="tech-pill">GSAP</span><span class="tech-pill">TypeScript</span><span class="tech-pill">Vercel Deploy</span></div>
+      <div class="task-divider"></div>
+      <div style="color:var(--muted);font-size:12px;line-height:1.8;"><span style="color:var(--accent);">&#10003;</span> Brand kit or reference sites accepted<br><span style="color:var(--accent);">&#10003;</span> Mobile-first, pixel-perfect across all devices<br><span style="color:var(--accent);">&#10003;</span> Deployed &amp; live within the delivery window<br><span style="color:var(--accent);">&#10003;</span> 2 rounds of revisions included</div>
+    </div>
+    <div class="task-sidebar">
+      <div class="sidebar-block"><div class="sidebar-label">Project Rate</div><div class="price-display"><span class="price-currency">$</span><span class="price-main">180</span></div><div class="price-note">Starting price &middot; Per landing page</div></div>
+      <div class="sidebar-block"><div class="sidebar-label">Delivery Timeline</div><div class="timeline-item"><span class="label">Single page</span><span class="value accent">4 days</span></div><div class="timeline-item"><span class="label">+ Blog / CMS</span><span class="value">+3 days</span></div><div class="timeline-item"><span class="label">Multi-section marketing site</span><span class="value">7 days</span></div></div>
+      <div class="sidebar-block"><div class="sidebar-label">Ideal For</div><div style="color:var(--muted);font-size:12px;line-height:1.8;">Startups launching a product, agencies needing a white-label page, or businesses replacing an outdated site.</div></div>
+      <div class="cta-block"><a href="mailto:omar.abdos2005@gmail.com?subject=Landing%20Page%20Project%20Inquiry">Get Your Landing Page</a></div>
+      <div class="guarantee"><span>&#128737;&#65039;</span><span>Free revision until you're satisfied</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE 3 -->
+<section id="freelance-3" style="background:var(--surface);border-top:1px solid var(--border);padding:80px 48px;">
+  <div class="section-label reveal" style="margin-bottom:32px;">Service 03</div>
+  <div class="task-container reveal">
+    <div class="task-main">
+      <div class="task-badge-row"><span class="badge badge-orange">Bug Fixing &amp; Optimization</span><span class="badge badge-green">Any Complexity</span><span class="badge badge-blue">React / JS / CSS</span></div>
+      <h2 class="task-title">Fix, Refactor &amp;<br>Optimize Your<br>Existing Frontend</h2>
+      <p class="task-short">Got a codebase that works but feels messy, slow, or broken? I'll dive in, diagnose the issues, fix them cleanly, and leave the code in a better state than I found it.</p>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.05em;margin-bottom:20px;">WHAT I DELIVER</div>
+      <div class="deliverable-item"><div class="deliverable-num">1</div><div><div class="deliverable-title">Bug Diagnosis &amp; Fixes</div><div class="deliverable-desc">I'll reproduce and fix UI bugs, layout breaks, console errors, broken API calls, and state management issues with clear before/after documentation.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">2</div><div><div class="deliverable-title">Performance Audit &amp; Fixes</div><div class="deliverable-desc">Identify and fix render bottlenecks, unnecessary re-renders, large bundle sizes, unoptimized images, and slow load times.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">3</div><div><div class="deliverable-title">Code Refactoring</div><div class="deliverable-desc">Clean up messy components, extract reusable logic, improve naming conventions, and organize file structure following best practices.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">4</div><div><div class="deliverable-title">Responsive Fixes</div><div class="deliverable-desc">Fix layout issues on specific screen sizes, broken mobile navs, overflow problems, and typography scaling across devices.</div></div></div>
+      <div class="task-divider"></div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.05em;margin-bottom:16px;">I WORK WITH</div>
+      <div class="tech-stack"><span class="tech-pill">React / Next.js</span><span class="tech-pill">Vue.js</span><span class="tech-pill">Vanilla JS</span><span class="tech-pill">CSS / Tailwind</span><span class="tech-pill">TypeScript</span><span class="tech-pill">Any framework</span></div>
+      <div class="task-divider"></div>
+      <div style="color:var(--muted);font-size:12px;line-height:1.8;"><span style="color:var(--accent);">&#10003;</span> Share your repo (private GitHub link accepted)<br><span style="color:var(--accent);">&#10003;</span> Written report of all changes made<br><span style="color:var(--accent);">&#10003;</span> No fix = no charge policy<br><span style="color:var(--accent);">&#10003;</span> Available for ongoing maintenance retainer</div>
+    </div>
+    <div class="task-sidebar">
+      <div class="sidebar-block"><div class="sidebar-label">Project Rate</div><div class="price-display"><span class="price-currency">$</span><span class="price-main">35</span></div><div class="price-note">Per hour &middot; or fixed price after assessment</div></div>
+      <div class="sidebar-block"><div class="sidebar-label">Typical Scopes</div><div class="timeline-item"><span class="label">Single bug fix</span><span class="value accent">1&ndash;3 hrs</span></div><div class="timeline-item"><span class="label">Performance audit</span><span class="value">4&ndash;6 hrs</span></div><div class="timeline-item"><span class="label">Full refactor sprint</span><span class="value">10&ndash;20 hrs</span></div><div class="timeline-item"><span class="label">Monthly retainer</span><span class="value">From $200</span></div></div>
+      <div class="sidebar-block"><div class="sidebar-label">Ideal For</div><div style="color:var(--muted);font-size:12px;line-height:1.8;">Teams with technical debt, founders who built an MVP and need it cleaned up, or anyone with a bug they can't crack.</div></div>
+      <div class="cta-block"><a href="mailto:omar.abdos2005@gmail.com?subject=Code%20Fix%20and%20Optimization%20Inquiry">Send Me Your Bug</a></div>
+      <div class="guarantee"><span>&#128737;&#65039;</span><span>No fix, no charge &mdash; guaranteed</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE 4 -->
+<section id="freelance-4" style="background:var(--bg);border-top:1px solid var(--border);padding:80px 48px;">
+  <div class="section-label reveal" style="margin-bottom:32px;">Service 04</div>
+  <div class="task-container reveal">
+    <div class="task-main">
+      <div class="task-badge-row"><span class="badge badge-green">Dashboard &amp; Data UI</span><span class="badge badge-orange">High Complexity</span><span class="badge badge-blue">Charts + Tables + Filters</span></div>
+      <h2 class="task-title">Admin Dashboard<br>&amp; Data Visualization<br>Interface</h2>
+      <p class="task-short">I'll build the internal tool or analytics dashboard your team actually wants to use &mdash; clean, fast, and packed with real-time data, filters, and interactive charts that make decisions easier.</p>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.05em;margin-bottom:20px;">WHAT I DELIVER</div>
+      <div class="deliverable-item"><div class="deliverable-num">1</div><div><div class="deliverable-title">Interactive Charts &amp; Graphs</div><div class="deliverable-desc">Line, bar, pie, area, and custom charts using Recharts or Chart.js. Fully interactive with tooltips, zoom, and date-range filtering.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">2</div><div><div class="deliverable-title">Data Tables with Full Controls</div><div class="deliverable-desc">Sortable, filterable, paginated tables with search, export to CSV, bulk actions, and inline editing where needed.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">3</div><div><div class="deliverable-title">Auth &amp; Role-Based Access</div><div class="deliverable-desc">Login system with JWT, protected routes, and role-based UI &mdash; admins see everything, users see what they should.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">4</div><div><div class="deliverable-title">Real-Time Updates</div><div class="deliverable-desc">WebSocket or polling integration for live data feeds &mdash; counters, notifications, live activity logs, and real-time KPI cards.</div></div></div>
+      <div class="deliverable-item"><div class="deliverable-num">5</div><div><div class="deliverable-title">Dark/Light Theme System</div><div class="deliverable-desc">Built-in theme toggle with CSS variables &mdash; looks great in both modes, persisted across sessions for returning users.</div></div></div>
+      <div class="task-divider"></div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.05em;margin-bottom:16px;">TECH STACK</div>
+      <div class="tech-stack"><span class="tech-pill">React 18</span><span class="tech-pill">TypeScript</span><span class="tech-pill">Recharts / Chart.js</span><span class="tech-pill">TanStack Table</span><span class="tech-pill">React Query</span><span class="tech-pill">Zustand</span><span class="tech-pill">Tailwind CSS</span><span class="tech-pill">WebSocket</span></div>
+      <div class="task-divider"></div>
+      <div style="color:var(--muted);font-size:12px;line-height:1.8;"><span style="color:var(--accent);">&#10003;</span> API docs or mock data sufficient to start<br><span style="color:var(--accent);">&#10003;</span> Figma designs or wireframes optional<br><span style="color:var(--accent);">&#10003;</span> Can build from scratch or on top of existing codebase<br><span style="color:var(--accent);">&#10003;</span> 3 revision rounds + 10-day post-delivery support</div>
+    </div>
+    <div class="task-sidebar">
+      <div class="sidebar-block"><div class="sidebar-label">Project Rate</div><div class="price-display"><span class="price-currency">$</span><span class="price-main">550</span></div><div class="price-note">Starting price &middot; Scales with complexity</div></div>
+      <div class="sidebar-block"><div class="sidebar-label">Delivery Breakdown</div><div class="timeline-item"><span class="label">Basic dashboard (3 views)</span><span class="value accent">10 days</span></div><div class="timeline-item"><span class="label">+ Real-time features</span><span class="value">+3 days</span></div><div class="timeline-item"><span class="label">+ Auth + roles</span><span class="value">+2 days</span></div><div class="timeline-item"><span class="label">Full admin panel (8+ views)</span><span class="value">25 days</span></div></div>
+      <div class="sidebar-block"><div class="sidebar-label">Ideal For</div><div style="color:var(--muted);font-size:12px;line-height:1.8;">SaaS products needing a customer-facing analytics panel, internal tools for operations teams, or e-commerce back-office dashboards.</div></div>
+      <div class="cta-block"><a href="mailto:omar.abdos2005@gmail.com?subject=Dashboard%20Project%20Inquiry">Build My Dashboard</a></div>
+      <div class="guarantee"><span>&#128737;&#65039;</span><span>Free revision until you're 100% satisfied</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="border-top:1px solid var(--border);">
+  <div class="contact-grid">
+    <div class="contact-left reveal">
+      <div class="section-label">Let's Connect</div>
+      <div class="big-text">Got a<br>project?<br><em>Let's talk.</em></div>
+      <p style="color:var(--muted);font-size:14px;line-height:1.8;max-width:380px;">I'm currently available for freelance work and collaborations. Whether it's a startup idea, an existing product, or a complete rebuild &mdash; I'd love to hear about it.</p>
+    </div>
+    <div class="contact-right reveal">
+      <a href="mailto:omar.abdos2005@gmail.com" class="contact-item">
+        <div><div class="ci-label">Email</div><div class="ci-val">omar.abdos2005&#64;gmail.com</div></div>
+        <span class="ci-arrow">&rarr;</span>
+      </a>
+      <a href="tel:+201110294688" class="contact-item">
+        <div><div class="ci-label">Phone / WhatsApp</div><div class="ci-val">+20 111 029 4688</div></div>
+        <span class="ci-arrow">&rarr;</span>
+      </a>
+      <div class="contact-item" style="cursor:default;">
+        <div><div class="ci-label">Location</div><div class="ci-val">Cairo, Egypt</div></div>
+        <span class="ci-arrow" style="color:var(--muted);">&#128205;</span>
+      </div>
+      <div class="contact-item" style="cursor:default;">
+        <div><div class="ci-label">University</div><div class="ci-val">Cairo University &middot; CompEng</div></div>
+        <span class="ci-arrow" style="color:var(--muted);">&#127891;</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-copy">&copy; 2025 Omar Abdelaziz. All rights reserved.</div>
+  <div class="footer-right">Built with <span>&hearts;</span> vanilla HTML / CSS / JS</div>
+</footer>
+
+<script>
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(r => observer.observe(r));
+
+// Skill bars — trigger when visible
+const skillObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const fill = e.target.querySelector('.skill-bar-fill');
+      if (fill) {
+        const w = fill.getAttribute('data-w');
+        fill.style.width = w + '%';
+      }
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.skill-card').forEach(c => skillObs.observe(c));
+</script>
+</body>
+</html>
